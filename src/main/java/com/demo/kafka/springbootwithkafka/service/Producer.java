@@ -29,13 +29,12 @@ public class Producer {
     }
 
     public void sendMessage(int id, String name) {
-        if (name == null)
-            log.info("#### -> Null name message");
+        if (name == null) log.info("#### -> Null name message");
 
         var user = new User(id, name);
         repo.insert(user);
 
         log.info("#### -> Producing message [{}]", user.toString());
-        this.kafkaTemplate.send(TOPIC, user.toString());
+        kafkaTemplate.send(TOPIC, user.toString());
     }
 }

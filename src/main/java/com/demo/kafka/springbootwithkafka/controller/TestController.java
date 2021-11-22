@@ -1,13 +1,11 @@
 package com.demo.kafka.springbootwithkafka.controller;
 
-import com.demo.kafka.springbootwithkafka.model.User;
+import com.demo.kafka.springbootwithkafka.service.Consumer;
 import com.demo.kafka.springbootwithkafka.service.Producer;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 /**
  * Класс TestController
@@ -18,24 +16,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping(value = "/kafka")
 public class TestController {
-    private final Producer userService;
 
-    @Autowired
-    public TestController(Producer userService) {
-        this.userService = userService;
-    }
+    private final Producer producerService;
+    private final Consumer consumerService;
 
     /**
-     * Возвращает запись элемента в справочнике видов и кодов продукции_v3
+     * Записывает элемент в таблицу пользователей
      *
      * @see "https://redmine.r77.center-inform.ru/issues/162447"
      */
     @PostMapping(value = "/user")
-    public void postUser(@RequestParam("id") int id, @RequestParam("name") String name) {
+    public void postUser(@RequestParam("id") int id, @RequestParam("name") String name){
         log.trace("[POST] postUser({},{})", id, name.toString());
-        this.userService.sendMessage(id, name);
+        this.producerService.sendMessage(id, name);
         log.trace("[POST] postUser({},{}) inserted", id, name.toString());
+    }
+
+    /**
+     * Возвращает запись элемента из таблицы пользователей
+     *
+     * @see "https://redmine.r77.center-inform.ru/issues/162447"
+     */
+    @GetMapping(value = "/users_list")
+    public void getUsersList() {
+        log.trace("[GET] getUsersList()");
+        this.consumerService.consume();
     }
 }

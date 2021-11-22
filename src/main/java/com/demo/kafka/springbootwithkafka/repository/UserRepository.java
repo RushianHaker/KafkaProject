@@ -22,8 +22,8 @@ import java.util.List;
 @Slf4j
 public class UserRepository implements IUserRepository {
 
-    private static final String SQL_SELECT_LIST = "SELECT id, name FROM testpsqltable";
-    private static final String SQL_INSERT = "INSERT INTO testpsqltable (id, name) VALUES (?, ?)";
+    private static final String SQL_SELECT_LIST = "SELECT id, name FROM user_table";
+    private static final String SQL_INSERT = "INSERT INTO user_table (id, name) VALUES (?, ?)";
 
     protected final static UserMapper USER_MAPPER = new UserMapper();
 
