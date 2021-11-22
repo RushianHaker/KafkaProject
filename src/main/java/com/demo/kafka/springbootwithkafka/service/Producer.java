@@ -1,6 +1,8 @@
 package com.demo.kafka.springbootwithkafka.service;
 
+import com.demo.kafka.springbootwithkafka.model.ConsumerLog;
 import com.demo.kafka.springbootwithkafka.model.User;
+import com.demo.kafka.springbootwithkafka.repository.IConsumerLogRepository;
 import com.demo.kafka.springbootwithkafka.repository.IUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,11 @@ public class Producer {
     }
 
     public void sendMessage(int id, String name) {
-        if (name == null) log.info("#### -> Null name message");
-
+        if (name == null) log.info("#### Null name message");
         var user = new User(id, name);
         repo.insert(user);
 
-        log.info("#### -> Producing message [{}]", user.toString());
-        kafkaTemplate.send(TOPIC, user.toString());
+        log.info("#### Producing message [user={}]", user);
+        kafkaTemplate.send(TOPIC, "Writing in log -> " + user);
     }
 }

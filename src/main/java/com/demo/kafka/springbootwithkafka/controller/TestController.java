@@ -24,25 +24,33 @@ public class TestController {
     private final Consumer consumerService;
 
     /**
-     * Записывает элемент в таблицу пользователей
+     * Записывает элемент в таблицу пользователей издателя
      *
-     * @see "https://redmine.r77.center-inform.ru/issues/162447"
      */
     @PostMapping(value = "/user")
     public void postUser(@RequestParam("id") int id, @RequestParam("name") String name){
-        log.trace("[POST] postUser({},{})", id, name.toString());
+        log.trace("[POST] postUser({},{})", id, name);
         this.producerService.sendMessage(id, name);
-        log.trace("[POST] postUser({},{}) inserted", id, name.toString());
+        log.trace("[POST] postUser({},{}) inserted", id, name);
     }
 
     /**
-     * Возвращает запись элемента из таблицы пользователей
+     * Возвращает записи элемента из таблицы пользователей издателя
      *
-     * @see "https://redmine.r77.center-inform.ru/issues/162447"
      */
     @GetMapping(value = "/users_list")
-    public void getUsersList() {
+    public String getUsersList() {
         log.trace("[GET] getUsersList()");
-        this.consumerService.consume();
+        return consumerService.consume().toString();
+    }
+
+    /**
+     * Возвращает записи элемента из таблицы логов подписчика
+     *
+     */
+    @GetMapping(value = "/log_list")
+    public String getLogList() {
+        log.trace("[GET] getLogList()");
+        return consumerService.consumeLog().toString();
     }
 }

@@ -4,27 +4,28 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
- * Класс User
+ * Класс ConsumerLog
  *
  * @author Max Ivanov
- * created 08.11.2021
+ * created 22.11.2021
  */
 @Data
-@AllArgsConstructor
-public class User {
+@RequiredArgsConstructor
+public class ConsumerLog {
 
     @JsonProperty("id")
     @JsonIgnoreProperties(ignoreUnknown = true)
-    private int id;
+    private final int id;
 
-    @JsonProperty("name")
-    @JsonIgnoreProperties (ignoreUnknown = true)
-    private String name;
+    @JsonProperty("msg")
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    private final String msg;
 
     @Override
     public String toString() {
-        return "User's" + " name " + name + " and id=" + id;
+        return "Was added log [id=" + id + ", log=" + msg + "]";
     }
 }
