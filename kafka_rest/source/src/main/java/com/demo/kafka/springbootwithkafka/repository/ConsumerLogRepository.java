@@ -56,7 +56,7 @@ public class ConsumerLogRepository implements IConsumerLogRepository {
                     rs.getString("message")
             );
 
-            log.trace("ConsumerLogMapper(): entity = [{}]", entity.toString());
+            log.trace("ConsumerLogMapper(): entity = [{}]", entity);
             return entity;
         }
     }

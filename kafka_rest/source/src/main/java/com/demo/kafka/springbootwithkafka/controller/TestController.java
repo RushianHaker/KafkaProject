@@ -25,7 +25,6 @@ public class TestController {
 
     /**
      * Записывает элемент в таблицу пользователей издателя
-     *
      */
     @PostMapping(value = "/user")
     public void postUser(@RequestParam("id") int id, @RequestParam("name") String name){
@@ -36,7 +35,6 @@ public class TestController {
 
     /**
      * Возвращает записи элемента из таблицы пользователей издателя
-     *
      */
     @GetMapping(value = "/users_list")
     public String getUsersList() {
@@ -46,7 +44,6 @@ public class TestController {
 
     /**
      * Возвращает записи элемента из таблицы логов подписчика
-     *
      */
     @GetMapping(value = "/log_list")
     public String getLogList() {

@@ -1,8 +1,6 @@
 package com.demo.kafka.springbootwithkafka.service;
 
-import com.demo.kafka.springbootwithkafka.model.ConsumerLog;
 import com.demo.kafka.springbootwithkafka.model.User;
-import com.demo.kafka.springbootwithkafka.repository.IConsumerLogRepository;
 import com.demo.kafka.springbootwithkafka.repository.IUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
