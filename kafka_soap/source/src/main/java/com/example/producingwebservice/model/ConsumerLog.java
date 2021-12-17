@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+
 /**
  * Класс ConsumerLog
  *
@@ -23,8 +25,12 @@ public class ConsumerLog {
     @JsonIgnoreProperties(ignoreUnknown = true)
     private final String msg;
 
+    @JsonProperty("data")
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    private final LocalDate data;
+
     @Override
     public String toString() {
-        return "Was added log [id=" + id + ", log=" + msg + "]";
+        return "Was added log [id=" + id + ", log=" + msg + "data=" + data.toString() + "]";
     }
 }

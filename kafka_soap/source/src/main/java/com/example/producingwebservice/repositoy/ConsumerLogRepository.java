@@ -21,8 +21,8 @@ import java.util.List;
 @Slf4j
 public class ConsumerLogRepository implements IConsumerLogRepository {
 
-    private static final String SQL_SELECT_LIST = "SELECT id, message FROM log";
-    private static final String SQL_INSERT = "INSERT INTO log (message) VALUES (?)";
+    private static final String SQL_SELECT_LIST = "SELECT id, message, date_time FROM log";
+    private static final String SQL_INSERT = "INSERT INTO log (message, date_time) VALUES (?, ?)";
 
     protected final static ConsumerLogMapper CONSUMER_LOG_MAPPER = new ConsumerLogMapper();
 
@@ -39,7 +39,7 @@ public class ConsumerLogRepository implements IConsumerLogRepository {
 
     @Override
     public void insert(ConsumerLog entity) {
-        var result = template.update(SQL_INSERT, entity.getMsg());
+        var result = template.update(SQL_INSERT, entity.getMsg(), entity.getData());
         if (result != 1) log.trace("ConsumerLogRepository.update() with {} rows inserted", entity);
         log.trace("insert({}) result={}", entity, result);
     }
@@ -50,8 +50,10 @@ public class ConsumerLogRepository implements IConsumerLogRepository {
     protected static class ConsumerLogMapper implements RowMapper<ConsumerLog> {
         @Override
         public ConsumerLog mapRow(ResultSet rs, int rowNum) throws SQLException {
+            var data = rs.getDate("date_time");
             var entity = new ConsumerLog(
-                    rs.getString("message")
+                    rs.getString("message"),
+                    data == null ? null : data.toLocalDate()
             );
 
             log.trace("ConsumerLogMapper(): entity = [{}]", entity);

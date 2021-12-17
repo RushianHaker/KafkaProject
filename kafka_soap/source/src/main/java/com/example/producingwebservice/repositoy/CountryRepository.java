@@ -3,6 +3,7 @@ package com.example.producingwebservice.repositoy;
 import com.example.producingwebservice.service.Producer;
 import io.spring.guides.gs_producing_web_service.Country;
 import io.spring.guides.gs_producing_web_service.Currency;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -19,9 +20,10 @@ import java.util.Map;
  */
 @Component
 @Slf4j
+@AllArgsConstructor
 public class CountryRepository {
 
-    public static Producer producer;
+    private final Producer producer;
     private static final Map<String, Country> countries = new HashMap<>();
 
     @PostConstruct
@@ -53,8 +55,9 @@ public class CountryRepository {
 
     public Country findCountry(String name) {
         Assert.notNull(name, "The country's name must not be null");
-        log.info("#### Producing message [country={}, {}]", countries.get(name), name);
-        producer.sendMessage(countries.get(name));
+        var result = countries.get(name);
+        log.info(" Country={}", result.getName());
+        producer.sendMessage(result.getName());
         return countries.get(name);
     }
 }
