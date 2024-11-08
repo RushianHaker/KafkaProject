@@ -1,3 +1,2 @@
 # KafkaProject
-Testing Kafka and JDBC 
-
+Testing Kafka and JDBC
